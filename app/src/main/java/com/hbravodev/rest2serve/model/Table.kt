@@ -1,11 +1,18 @@
 package com.hbravodev.rest2serve.model
 
-class Table(val number: Int, var items: MutableList<Dish>?) {
+import android.util.Log
 
-    constructor(number: Int) : this(number, null)
+class Table {
+
+    val number: Int = 0
+    var items: MutableList<Dish>? = arrayListOf()
+
+    constructor(number: Int, items: MutableList<Dish>?)
+
+    fun dishes(): Array<Dish>? = items?.toTypedArray()
 
     fun addDish(dish: Dish) {
-        items?.add(dish)
+        Log.v("TAG", "${items?.add(dish)}")
     }
 
     fun check(): Float? {

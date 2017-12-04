@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rest2Serve</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="table_title_format">Table: %i</string>
+    <string name="dish_list_format">%s, %s, $%f</string>
 </resources>
