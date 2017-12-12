@@ -4,105 +4,71 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ViewSwitcher
 
 import com.hbravodev.rest2serve.R
+import com.hbravodev.rest2serve.model.Dish
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [MenuFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [MenuFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
- class MenuFragment:Fragment() {
+class MenuFragment:Fragment() {
 
-
- // TODO: Rename and change types of parameters
-    private var mParam1:String? = null
-    private var mParam2:String? = null
-
-    private var mListener:OnFragmentInteractionListener? = null
-
-    public override fun onCreate(savedInstanceState:Bundle?) {
-    super.onCreate(savedInstanceState)
-    if (getArguments() != null)
-    {
-    mParam1 = getArguments().getString(ARG_PARAM1)
-    mParam2 = getArguments().getString(ARG_PARAM2)
-    }
-    }
-
-    public override fun onCreateView(inflater:LayoutInflater?, container:ViewGroup?,
-    savedInstanceState:Bundle?):View? {
-     // Inflate the layout for this fragment
-            return inflater!!.inflate(R.layout.fragment_menu, container, false)
-    }
-
-     // TODO: Rename method, update argument and hook method into UI event
-         fun onButtonPressed(uri:Uri) {
-    if (mListener != null)
-    {
-    mListener!!.onFragmentInteraction(uri)
-    }
-    }
-
-    public override fun onAttach(context:Context?) {
-    super.onAttach(context)
-    if (context is OnFragmentInteractionListener)
-    {
-    mListener = context as OnFragmentInteractionListener?
-    }
-    else
-    {
-    throw RuntimeException((context!!.toString() + " must implement OnFragmentInteractionListener"))
-    }
-    }
-
-    public override fun onDetach() {
-    super.onDetach()
-    mListener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
-         interface OnFragmentInteractionListener {
-     // TODO: Update argument type and name
-             fun onFragmentInteraction(uri:Uri)
+    enum class VIEW_INDEX(val index: Int) {
+        LOADING(0),
+        MENU(1)
     }
 
     companion object {
-     // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-    private val ARG_PARAM2 = "param2"
+        fun newInstance() : MenuFragment = MenuFragment()
+    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MenuFragment.
-     */
-        // TODO: Rename and change types and number of parameters
-         fun newInstance(param1:String, param2:String):MenuFragment {
-    val fragment = MenuFragment()
-    val args = Bundle()
-    args.putString(ARG_PARAM1, param1)
-    args.putString(ARG_PARAM2, param2)
-    fragment.setArguments(args)
-    return fragment
+    lateinit var root: View
+    lateinit var viewSwitcher: ViewSwitcher
+    lateinit var menuList: RecyclerView
+
+    var menu: List<Dish>? = null
+        set(value) {
+            field = value
+            if (value != null) {
+
+            }
+        }
+
+    override fun onCreate(savedInstanceState:Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
+
+    override fun onCreateView(inflater:LayoutInflater?, container:ViewGroup?,
+                              savedInstanceState:Bundle?):View? {
+        if (inflater != null) {
+            root = inflater.inflate(R.layout.fragment_menu, container, false)
+
+            viewSwitcher = root.findViewById(R.id.view_switcher)
+            viewSwitcher.setInAnimation(activity, android.R.anim.fade_in)
+            viewSwitcher.setOutAnimation(activity, android.R.anim.fade_out)
+
+            // 1. Access to RecyclerView
+            menuList = root.findViewById(R.id.menu_list)
+
+            // 2. Set the LayoutManager
+            menuList.layoutManager = GridLayoutManager(activity, 1)
+
+        }
+
     }
-}// Required empty public constructor
+
+    public override fun onAttach(context:Context?) {
+        super.onAttach(context)
+
+    }
+
+    public override fun onDetach() {
+        super.onDetach()
+
+    }
+
+}
