@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ViewSwitcher
 
 import com.hbravodev.rest2serve.R
+import com.hbravodev.rest2serve.adapter.MenuRecyclerViewAdapter
 import com.hbravodev.rest2serve.model.Dish
 
 class MenuFragment:Fragment() {
@@ -32,8 +34,11 @@ class MenuFragment:Fragment() {
     var menu: List<Dish>? = null
         set(value) {
             field = value
-            if (value != null) {
 
+            if (value != null) {
+                // Assign adapter to RecyclerView
+                menuList.adapter = MenuRecyclerViewAdapter(value)
+                viewSwitcher.displayedChild = VIEW_INDEX.MENU.index
             }
         }
 
@@ -57,8 +62,13 @@ class MenuFragment:Fragment() {
             // 2. Set the LayoutManager
             menuList.layoutManager = GridLayoutManager(activity, 1)
 
+            // 3. Set itemAnimator
+            menuList.itemAnimator = DefaultItemAnimator()
+
+
         }
 
+        return root
     }
 
     public override fun onAttach(context:Context?) {

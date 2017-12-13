@@ -3,7 +3,7 @@ package com.hbravodev.rest2serve.model
 import java.io.Serializable
 import java.util.*
 
-data class Dish(val name: String, val allergens: Array<String>?, val price: Float, val description: String) : Serializable {
+data class Dish(val name: String, val allergens: IntArray?, val price: Float, val description: String, val image: Int) : Serializable {
 
     override fun toString() = "$name, $$price"
 
