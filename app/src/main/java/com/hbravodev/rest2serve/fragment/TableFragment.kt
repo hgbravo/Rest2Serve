@@ -38,9 +38,9 @@ class TableFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val tempDish = Dish("Paella", arrayOf("Mariscos"), 10.9f, "Uno de los mejores platos")
-        Tables[tableIndex].addDish(tempDish)
-        Log.v("TAG", "${Tables[tableIndex].number}")
+//        val tempDish = Dish("Paella", arrayOf("Mariscos"), 10.9f, "Uno de los mejores platos")
+//        Tables[tableIndex].addDish(tempDish)
+//        Log.v("TAG", "${Tables[tableIndex].number}")
 
         // Inflate the layout for this fragment
         if (inflater != null) {

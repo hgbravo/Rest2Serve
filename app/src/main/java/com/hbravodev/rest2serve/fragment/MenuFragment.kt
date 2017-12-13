@@ -1,9 +1,9 @@
 package com.hbravodev.rest2serve.fragment
 
+import android.app.AlertDialog
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -11,10 +11,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ViewSwitcher
-
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.adapter.MenuRecyclerViewAdapter
 import com.hbravodev.rest2serve.model.Dish
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
+import org.json.JSONObject
+import java.net.URL
+import java.util.*
 
 class MenuFragment:Fragment() {
 
@@ -36,9 +42,12 @@ class MenuFragment:Fragment() {
             field = value
 
             if (value != null) {
-                // Assign adapter to RecyclerView
+                // 4. Assign adapter to RecyclerView
                 menuList.adapter = MenuRecyclerViewAdapter(value)
                 viewSwitcher.displayedChild = VIEW_INDEX.MENU.index
+            }
+            else {
+
             }
         }
 
@@ -65,10 +74,68 @@ class MenuFragment:Fragment() {
             // 3. Set itemAnimator
             menuList.itemAnimator = DefaultItemAnimator()
 
+            if (menu == null) {
+                updateMenu()
+            }
+
 
         }
 
         return root
+    }
+
+    private fun updateMenu() {
+
+        viewSwitcher.displayedChild = VIEW_INDEX.LOADING.index
+
+        async(UI) {
+            val newMenu: Deferred<List<Dish>?> = bg {
+                downloadMenu()
+            }
+
+            val downloadedMenu = newMenu.await()
+            if (downloadedMenu !=  null) {
+                menu = downloadedMenu
+            } else {
+                AlertDialog.Builder(activity)
+                        .setTitle("Error")
+                        .setMessage("The menu info could not be downloaded.")
+                        .setPositiveButton("Retry", { dialog, _ ->
+                            dialog.dismiss()
+                            updateMenu()
+                        })
+                        .setNegativeButton("Cancel", { _, _ -> activity.finish() })
+                        .show()
+            }
+        }
+    }
+
+    private fun downloadMenu(): List<Dish>? {
+        try {
+            val url = URL("http://www.mocky.io/v2/5a318c4c2e00006e35e3b554")
+            val jsonString = Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next()
+
+            val jsonRoot = JSONObject(jsonString)
+            val list = jsonRoot.getJSONArray("Dishes")
+
+            val dishes = mutableListOf<Dish>()
+
+            for (dishIndex in 0 until list.length()) {
+                val dish = list.getJSONObject(dishIndex)
+                val name = dish.getString("name")
+                val allergens = dish.getJSONArray("allergens") as? IntArray
+                val price = dish.getDouble("price").toFloat()
+                val description = dish.getString("description")
+                val image = dish.getInt("image")
+
+                dishes.add(Dish(name, allergens, price, description, image))
+            }
+
+            return dishes
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return null
     }
 
     public override fun onAttach(context:Context?) {

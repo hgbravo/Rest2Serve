@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.hbravodev.rest2serve.R
+import com.hbravodev.rest2serve.fragment.MenuFragment
 
 class MenuActivity : AppCompatActivity() {
 
@@ -16,5 +18,14 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        if (findViewById<View>(R.id.menu_fragment) != null) {
+            if (fragmentManager.findFragmentById(R.id.menu_fragment) == null) {
+                val fragment = MenuFragment.newInstance()
+                fragmentManager.beginTransaction()
+                        .add(R.id.menu_fragment, fragment)
+                        .commit()
+            }
+        }
     }
 }

@@ -38,7 +38,7 @@ class MenuRecyclerViewAdapter(val menu: List<Dish>) : RecyclerView.Adapter<MenuR
             val context = itemView.context
 
             // Update view - model
-            dishImage.setImageResource(dish.image)
+            //dishImage.setImageResource(dish.image)
             dishPrice.text = context.getString(R.string.dish_price_format, dish.price)
             dishDescription.text = dish.description
 

@@ -36,7 +36,7 @@ class TableActivity : AppCompatActivity() {
         }
 
         add_dish_button.setOnClickListener { v: View? ->
-
+            startActivity(MenuActivity.intent(this))
         }
     }
 }
