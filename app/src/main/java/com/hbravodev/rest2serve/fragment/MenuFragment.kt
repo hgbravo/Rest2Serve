@@ -36,6 +36,7 @@ class MenuFragment:Fragment() {
     lateinit var root: View
     lateinit var viewSwitcher: ViewSwitcher
     lateinit var menuList: RecyclerView
+    private var onDishSelectedListener: OnDishSelectedListener? = null
 
     var menu: List<Dish>? = null
         set(value) {
@@ -43,11 +44,19 @@ class MenuFragment:Fragment() {
 
             if (value != null) {
                 // 4. Assign adapter to RecyclerView
-                menuList.adapter = MenuRecyclerViewAdapter(value)
+                val adapter = MenuRecyclerViewAdapter(value)
+                menuList.adapter = adapter
                 viewSwitcher.displayedChild = VIEW_INDEX.MENU.index
+
+                adapter.onClickListener = View.OnClickListener { v: View? ->
+                    val position = menuList.getChildAdapterPosition(v)
+                    val dishToShow = value[position]
+
+                    onDishSelectedListener?.onDishSelected(dishToShow)
+                }
             }
             else {
-
+                // Todo: What happens when we don't have value here
             }
         }
 
@@ -112,7 +121,7 @@ class MenuFragment:Fragment() {
 
     private fun downloadMenu(): List<Dish>? {
         try {
-            val url = URL("http://www.mocky.io/v2/5a318c4c2e00006e35e3b554")
+            val url = URL("http://www.mocky.io/v2/5a43d4642e00008e1f766043")
             val jsonString = Scanner(url.openStream(), "UTF-8").useDelimiter("\\A").next()
 
             val jsonRoot = JSONObject(jsonString)
@@ -123,7 +132,11 @@ class MenuFragment:Fragment() {
             for (dishIndex in 0 until list.length()) {
                 val dish = list.getJSONObject(dishIndex)
                 val name = dish.getString("name")
-                val allergens = dish.getJSONArray("allergens") as? IntArray
+                val allergensArray = dish.getJSONArray("allergens")
+                var allergens = IntArray(allergensArray.length())
+                for (pos in 0 until allergensArray.length()) {
+                    allergens[pos] = allergensArray[pos] as Int
+                }
                 val price = dish.getDouble("price").toFloat()
                 val description = dish.getString("description")
                 val image = dish.getInt("image")
@@ -146,6 +159,10 @@ class MenuFragment:Fragment() {
     public override fun onDetach() {
         super.onDetach()
 
+    }
+
+    interface OnDishSelectedListener {
+        fun onDishSelected(dish: Dish?)
     }
 
 }

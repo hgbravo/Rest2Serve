@@ -3,6 +3,6 @@
     <dimen name="small_margin">8dp</dimen>
     <dimen name="default_margin">16dp</dimen>
     <dimen name="small_dps">8dp</dimen>
-    <dimen name="maxWidth">120dp</dimen>
+    <dimen name="maxWidthRV">90dp</dimen>
     <dimen name="minWidth">48dp</dimen>
 </resources>

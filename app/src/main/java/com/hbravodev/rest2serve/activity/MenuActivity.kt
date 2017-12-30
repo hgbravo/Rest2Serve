@@ -7,8 +7,9 @@ import android.os.Bundle
 import android.view.View
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.fragment.MenuFragment
+import com.hbravodev.rest2serve.model.Dish
 
-class MenuActivity : AppCompatActivity() {
+class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener {
 
     companion object {
 
@@ -27,5 +28,9 @@ class MenuActivity : AppCompatActivity() {
                         .commit()
             }
         }
+    }
+
+    override fun onDishSelected(dish: Dish?) {
+        // Launch Detail Fragment Todo
     }
 }

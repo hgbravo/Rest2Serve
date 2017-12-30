@@ -4,6 +4,6 @@
     <string name="dish_list_format">%s, %s, $%f</string>
     <string name="items_label">Items</string>
     <string name="dish_image_description">Dish image description</string>
-    <string name="dish_price_format">Price: $%f</string>
+    <string name="dish_price_format">Price: $%.2f</string>
 
 </resources>

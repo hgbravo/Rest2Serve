@@ -11,8 +11,12 @@ import com.hbravodev.rest2serve.model.Dish
 
 class MenuRecyclerViewAdapter(val menu: List<Dish>) : RecyclerView.Adapter<MenuRecyclerViewAdapter.DishViewHolder>() {
 
+    var onClickListener: View.OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DishViewHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.content_menu, parent, false)
+        view.setOnClickListener(onClickListener)
+
         return DishViewHolder(view)
     }
 
@@ -24,9 +28,9 @@ class MenuRecyclerViewAdapter(val menu: List<Dish>) : RecyclerView.Adapter<MenuR
 
     inner class DishViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        val dishName = itemView.findViewById<TextView>(R.id.dish_name)
         val dishImage = itemView.findViewById<ImageView>(R.id.dish_image)
         val dishPrice = itemView.findViewById<TextView>(R.id.dish_price)
-        val dishDescription = itemView.findViewById<TextView>(R.id.dish_description)
         val dishAllergen01 = itemView.findViewById<ImageView>(R.id.allergen_01)
         val dishAllergen02 = itemView.findViewById<ImageView>(R.id.allergen_02)
         val dishAllergen03 = itemView.findViewById<ImageView>(R.id.allergen_03)
@@ -38,19 +42,19 @@ class MenuRecyclerViewAdapter(val menu: List<Dish>) : RecyclerView.Adapter<MenuR
             val context = itemView.context
 
             // Update view - model
-            //dishImage.setImageResource(dish.image)
+            dishName.text = dish.name
+            //dishImage.setImageResource(dish.image) //Todo: Download dish main image
             dishPrice.text = context.getString(R.string.dish_price_format, dish.price)
-            dishDescription.text = dish.description
 
             // Todo: Do better code here. Not Doom Pyramid
             val allergens = dish.allergens?.size
             if (allergens != null) {
-                for (item in 0 until allergens) {
-                    when(item) {
-                        1 -> dishAllergensList[item].setImageResource(R.drawable.ic_001)
-                        2 -> dishAllergensList[item].setImageResource(R.drawable.ic_002)
-                        3 -> dishAllergensList[item].setImageResource(R.drawable.ic_003)
-                        4 -> dishAllergensList[item].setImageResource(R.drawable.ic_004)
+                for (pos in 0 until allergens) {
+                    when(dish.allergens[pos]) {
+                        1 -> dishAllergensList[pos].setImageResource(R.drawable.ic_001)
+                        2 -> dishAllergensList[pos].setImageResource(R.drawable.ic_002)
+                        3 -> dishAllergensList[pos].setImageResource(R.drawable.ic_003)
+                        4 -> dishAllergensList[pos].setImageResource(R.drawable.ic_004)
                     }
                 }
             }
