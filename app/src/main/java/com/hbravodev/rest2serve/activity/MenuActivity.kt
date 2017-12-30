@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.hbravodev.rest2serve.R
+import com.hbravodev.rest2serve.fragment.DishDetailFragment
 import com.hbravodev.rest2serve.fragment.MenuFragment
 import com.hbravodev.rest2serve.model.Dish
 
@@ -25,12 +26,19 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener {
                 val fragment = MenuFragment.newInstance()
                 fragmentManager.beginTransaction()
                         .add(R.id.menu_fragment, fragment)
+                        .addToBackStack("pile0")
                         .commit()
             }
         }
     }
 
-    override fun onDishSelected(dish: Dish?) {
-        // Launch Detail Fragment Todo
+    override fun onDishSelected(dish: Dish) {
+        if (findViewById<View>(R.id.menu_fragment) != null) {
+                val fragment = DishDetailFragment.newInstance(dish)
+                fragmentManager.beginTransaction()
+                        .add(R.id.menu_fragment, fragment)
+                        .addToBackStack("pile1")
+                        .commit()
+        }
     }
 }

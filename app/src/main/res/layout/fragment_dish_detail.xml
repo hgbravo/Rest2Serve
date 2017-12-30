@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
     android:padding="@dimen/default_margin">
 
     <TextView
@@ -23,16 +24,16 @@
         android:id="@+id/dish_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="200dp"
-        android:adjustViewBounds="true"
-        android:layout_marginTop="@dimen/small_margin"
+        android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@id/dish_name"
-        android:layout_alignParentBottom="false"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/dish_image_description"
+        android:maxWidth="200dp"
         app:srcCompat="@drawable/cheese_lasagna" />
 
 
@@ -40,19 +41,18 @@
         layout="@layout/dish_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/dish_image"
         android:layout_alignTop="@id/dish_image"
+        android:layout_toEndOf="@id/dish_image"
         android:layout_toRightOf="@id/dish_image" />
 
     <TextView
         android:id="@+id/dish_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/dish_image"
         android:layout_below="@id/dish_image"
         android:layout_marginTop="@dimen/default_margin"
-        android:layout_alignLeft="@id/dish_image"
-        tools:text="Dish complete description with ingredients"/>
-
+        tools:text="Dish complete description with ingredients" />
 
 
 </RelativeLayout>

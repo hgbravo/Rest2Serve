@@ -1,5 +1,6 @@
 package com.hbravodev.rest2serve.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -153,16 +154,28 @@ class MenuFragment:Fragment() {
 
     public override fun onAttach(context:Context?) {
         super.onAttach(context)
+        commonAttach(context)
+    }
 
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        commonAttach(activity)
     }
 
     public override fun onDetach() {
         super.onDetach()
+        onDishSelectedListener = null
 
     }
 
+    fun commonAttach(listener: Any?) {
+        if (listener is OnDishSelectedListener) {
+            onDishSelectedListener = listener
+        }
+    }
+
     interface OnDishSelectedListener {
-        fun onDishSelected(dish: Dish?)
+        fun onDishSelected(dish: Dish)
     }
 
 }
