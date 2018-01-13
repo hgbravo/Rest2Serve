@@ -1,5 +1,6 @@
 package com.hbravodev.rest2serve.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -10,9 +11,10 @@ import com.hbravodev.rest2serve.fragment.DishDetailFragment
 import com.hbravodev.rest2serve.fragment.MenuFragment
 import com.hbravodev.rest2serve.model.Dish
 
-class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener {
+class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, DishDetailFragment.OnAddDishListener {
 
     companion object {
+        private val EXTRA_DISH = "EXTRA_DISH"
 
         fun intent(context: Context) : Intent = Intent(context, MenuActivity::class.java)
     }
@@ -26,7 +28,7 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener {
                 val fragment = MenuFragment.newInstance()
                 fragmentManager.beginTransaction()
                         .add(R.id.menu_fragment, fragment)
-                        .addToBackStack("pile0")
+                        //.addToBackStack("pile0")
                         .commit()
             }
         }
@@ -40,5 +42,12 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener {
                         .addToBackStack("pile1")
                         .commit()
         }
+    }
+
+    override fun onAddDish(dish: Dish) {
+        val returnIntent = Intent()
+        returnIntent.putExtra(EXTRA_DISH, dish)
+        setResult(Activity.RESULT_OK, returnIntent)
+        finish()
     }
 }

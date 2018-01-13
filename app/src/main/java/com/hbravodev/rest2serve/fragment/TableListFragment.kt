@@ -40,7 +40,7 @@ class TableListFragment : Fragment() {
             // Here we know which table have been selected
             list.setOnItemClickListener { _, _, position, _ ->
                 // inform to listener
-                onTableSelectedListener?.onTableSelected(Tables[position], position)
+                onTableSelectedListener?.onTableSelected(position)
             }
 
         }
@@ -70,6 +70,6 @@ class TableListFragment : Fragment() {
     }
 
     interface OnTableSelectedListener {
-        fun onTableSelected(table: Table, position: Int)
+        fun onTableSelected(position: Int)
     }
 }

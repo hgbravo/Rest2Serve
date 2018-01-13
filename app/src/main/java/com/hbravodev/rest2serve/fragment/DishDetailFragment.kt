@@ -1,14 +1,19 @@
 package com.hbravodev.rest2serve.fragment
 
+import android.app.Activity
 import android.app.Fragment
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.model.Dish
+import kotlinx.android.synthetic.main.fragment_dish_detail.*
 import org.w3c.dom.Text
 
 class DishDetailFragment : Fragment() {
@@ -27,6 +32,8 @@ class DishDetailFragment : Fragment() {
         }
     }
 
+    private var onAddDishListener: OnAddDishListener? = null
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -41,6 +48,7 @@ class DishDetailFragment : Fragment() {
         val dishAllergen04 = root?.findViewById<ImageView>(R.id.allergen_04)
         val dishAllergensList: List<ImageView?> = listOf(dishAllergen01, dishAllergen02, dishAllergen03, dishAllergen04)
         val dishDescription = root?.findViewById<TextView>(R.id.dish_description)
+        val addDishBtn = root?.findViewById<Button>(R.id.add_dish_btn)
 
         val dishToShow = arguments.getSerializable(ARG_DISH) as? Dish
 
@@ -63,8 +71,38 @@ class DishDetailFragment : Fragment() {
             }
         }
 
+        addDishBtn?.setOnClickListener {
+            if (dishToShow != null) {
+                onAddDishListener?.onAddDish(dishToShow)
+            }
+        }
+
         return root
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        commonAttach(context)
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        commonAttach(activity)
+    }
+
+    private fun commonAttach(listener: Any?) {
+        if (listener is OnAddDishListener) {
+            onAddDishListener = listener
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onAddDishListener = null
+    }
+
+    interface OnAddDishListener {
+        fun onAddDish(dish: Dish)
+    }
 
 }

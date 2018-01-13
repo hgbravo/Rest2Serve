@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), TableListFragment.OnTableSelectedListe
         }
     }
 
-    override fun onTableSelected(table: Table, position: Int) {
+    override fun onTableSelected(position: Int) {
         val tableFragment = fragmentManager.findFragmentById(R.id.fragment_table) as? TableFragment
         if (tableFragment == null) {
             startActivity(TableActivity.intent(this, position))

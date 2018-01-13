@@ -34,8 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/dish_information"
-        android:layout_toEndOf="@+id/dish_image"
-        android:layout_toRightOf="@+id/dish_image"
+        android:layout_alignLeft="@id/dish_information"
         android:orientation="horizontal">
 
         <ImageView

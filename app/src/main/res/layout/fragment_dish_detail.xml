@@ -54,5 +54,31 @@
         android:layout_marginTop="@dimen/default_margin"
         tools:text="Dish complete description with ingredients" />
 
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/add_dish_button"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/add_dish_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="Add" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
 
 </RelativeLayout>
