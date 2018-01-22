@@ -1,5 +1,6 @@
 package com.hbravodev.rest2serve.model
 
+import com.hbravodev.rest2serve.R
 import java.io.Serializable
 import java.util.*
 
@@ -27,5 +28,13 @@ data class Dish(val name: String, val allergens: IntArray?, val price: Float, va
         result = 31 * result + price.hashCode()
         result = 31 * result + description.hashCode()
         return result
+    }
+
+    fun dishImage(): Int = when(image) {
+        1 -> R.drawable.ic_dish_01
+        2 -> R.drawable.ic_dish_02
+        3 -> R.drawable.ic_dish_03
+        4 -> R.drawable.ic_dish_04
+        else -> R.drawable.cheese_lasagna
     }
 }

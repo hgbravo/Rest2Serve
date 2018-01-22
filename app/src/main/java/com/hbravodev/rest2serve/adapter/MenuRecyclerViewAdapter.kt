@@ -43,7 +43,7 @@ class MenuRecyclerViewAdapter(val menu: List<Dish>) : RecyclerView.Adapter<MenuR
 
             // Update view - model
             dishName.text = dish.name
-            //dishImage.setImageResource(dish.image) //Todo: Download dish main image
+            dishImage.setImageResource(dish.dishImage())
             dishPrice.text = context.getString(R.string.dish_price_format, dish.price)
 
             // Todo: Do better code here. Not Doom Pyramid

@@ -3,7 +3,6 @@ package com.hbravodev.rest2serve.fragment
 import android.app.Activity
 import android.app.Fragment
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +13,6 @@ import android.widget.TextView
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.model.Dish
 import kotlinx.android.synthetic.main.fragment_dish_detail.*
-import org.w3c.dom.Text
 
 class DishDetailFragment : Fragment() {
 
@@ -49,12 +47,13 @@ class DishDetailFragment : Fragment() {
         val dishAllergensList: List<ImageView?> = listOf(dishAllergen01, dishAllergen02, dishAllergen03, dishAllergen04)
         val dishDescription = root?.findViewById<TextView>(R.id.dish_description)
         val addDishBtn = root?.findViewById<Button>(R.id.add_dish_btn)
+        val cancelBtn = root?.findViewById<Button>(R.id.cancel_btn)
 
         val dishToShow = arguments.getSerializable(ARG_DISH) as? Dish
 
         if (dishToShow != null) {
             dishName?.text = dishToShow.name
-            //dishImage?.setImageResource(dishToShow.image)
+            dishImage?.setImageResource(dishToShow.dishImage())
             dishPrice?.text = getString(R.string.dish_price_format, dishToShow.price)
             dishDescription?.text = dishToShow.description
 
@@ -75,6 +74,10 @@ class DishDetailFragment : Fragment() {
             if (dishToShow != null) {
                 onAddDishListener?.onAddDish(dishToShow)
             }
+        }
+
+        cancelBtn?.setOnClickListener {
+            onAddDishListener?.dismiss()
         }
 
         return root
@@ -103,6 +106,7 @@ class DishDetailFragment : Fragment() {
 
     interface OnAddDishListener {
         fun onAddDish(dish: Dish)
+        fun dismiss()
     }
 
 }

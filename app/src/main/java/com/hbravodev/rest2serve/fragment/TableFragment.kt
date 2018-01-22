@@ -11,6 +11,7 @@ import android.widget.ListView
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.model.Dish
 import com.hbravodev.rest2serve.model.Tables
+import java.util.ArrayList
 
 class TableFragment : Fragment() {
 
@@ -29,7 +30,7 @@ class TableFragment : Fragment() {
     private lateinit var root: View
     private var tableIndex  = 0
     var list: ListView? = null
-    var adapter: ArrayAdapter<Dish>? = null
+    private lateinit var adapter: ArrayAdapter<Dish>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,14 +40,10 @@ class TableFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-//        val tempDish = Dish("Paella", arrayOf("Mariscos"), 10.9f, "Uno de los mejores platos")
-//        Tables[tableIndex].addDish(tempDish)
-//        Log.v("TAG", "${Tables[tableIndex].number}")
-
         // Inflate the layout for this fragment
         if (inflater != null) {
             root = inflater.inflate(R.layout.fragment_table, container, false)
-            list = root.findViewById<ListView>(R.id.dishes_list)
+            list = root.findViewById(R.id.dishes_list)
             adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, Tables[tableIndex].dishes())
             list?.adapter = adapter
         }
@@ -56,10 +53,10 @@ class TableFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        adapter?.notifyDataSetChanged()
     }
 
     public fun updateContent() {
-        adapter?.notifyDataSetChanged()
+        adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, Tables[tableIndex].dishes())
+        list?.adapter = adapter
     }
 }

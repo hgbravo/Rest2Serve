@@ -28,7 +28,7 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, D
                 val fragment = MenuFragment.newInstance()
                 fragmentManager.beginTransaction()
                         .add(R.id.menu_fragment, fragment)
-                        //.addToBackStack("pile0")
+                        .addToBackStack("stack0")
                         .commit()
             }
         }
@@ -39,7 +39,7 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, D
                 val fragment = DishDetailFragment.newInstance(dish)
                 fragmentManager.beginTransaction()
                         .add(R.id.menu_fragment, fragment)
-                        .addToBackStack("pile1")
+                        .addToBackStack("stack1")
                         .commit()
         }
     }
@@ -49,5 +49,10 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, D
         returnIntent.putExtra(EXTRA_DISH, dish)
         setResult(Activity.RESULT_OK, returnIntent)
         finish()
+    }
+
+    override fun dismiss() {
+        super.onBackPressed()
+        fragmentManager.popBackStack("stack0", 0)
     }
 }
