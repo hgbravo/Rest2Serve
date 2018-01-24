@@ -4,7 +4,7 @@ import android.util.Log
 
 class Table {
 
-    val number: Int = 0
+    private val number: Int = 0
     var items: MutableList<Dish>? = arrayListOf()
 
     constructor(number: Int, items: MutableList<Dish>?)
