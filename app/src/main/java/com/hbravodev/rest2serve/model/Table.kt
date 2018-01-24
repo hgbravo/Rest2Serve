@@ -5,13 +5,13 @@ import android.util.Log
 class Table {
 
     private val number: Int = 0
-    var items: MutableList<Dish>? = arrayListOf()
+    var items: MutableList<DishOrdered>? = arrayListOf()
 
-    constructor(number: Int, items: MutableList<Dish>?)
+    constructor(number: Int, items: MutableList<DishOrdered>?)
 
     fun dishes(): Array<Dish>? = items?.toTypedArray()
 
-    fun addDish(dish: Dish) {
+    fun addDish(dish: DishOrdered) {
         Log.v("TAG", "${items?.add(dish)}")
     }
 

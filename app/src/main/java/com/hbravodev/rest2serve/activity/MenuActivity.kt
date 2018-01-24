@@ -10,6 +10,7 @@ import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.fragment.DishDetailFragment
 import com.hbravodev.rest2serve.fragment.MenuFragment
 import com.hbravodev.rest2serve.model.Dish
+import com.hbravodev.rest2serve.model.DishOrdered
 
 class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, DishDetailFragment.OnAddDishListener {
 
@@ -44,7 +45,7 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, D
         }
     }
 
-    override fun onAddDish(dish: Dish) {
+    override fun onAddDish(dish: DishOrdered) {
         val returnIntent = Intent()
         returnIntent.putExtra(EXTRA_DISH, dish)
         setResult(Activity.RESULT_OK, returnIntent)

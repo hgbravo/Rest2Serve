@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.model.Dish
+import com.hbravodev.rest2serve.model.DishOrdered
 import kotlinx.android.synthetic.main.fragment_dish_detail.*
 
 class DishDetailFragment : Fragment() {
@@ -74,7 +75,11 @@ class DishDetailFragment : Fragment() {
 
         addDishBtn?.setOnClickListener {
             if (dishToShow != null) {
-                onAddDishListener?.onAddDish(dishToShow)
+                val notes = dishNotes?.text
+                if (notes != null) {
+                    val dishToAdd = DishOrdered(dishToShow, notes.toString())
+                    onAddDishListener?.onAddDish(dishToAdd)
+                }
             }
         }
 
@@ -117,7 +122,7 @@ class DishDetailFragment : Fragment() {
     }
 
     interface OnAddDishListener {
-        fun onAddDish(dish: Dish)
+        fun onAddDish(dish: DishOrdered)
         fun dismiss()
     }
 

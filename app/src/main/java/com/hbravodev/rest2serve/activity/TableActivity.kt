@@ -10,6 +10,7 @@ import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.fragment.DishDetailFragment
 import com.hbravodev.rest2serve.fragment.TableFragment
 import com.hbravodev.rest2serve.model.Dish
+import com.hbravodev.rest2serve.model.DishOrdered
 import com.hbravodev.rest2serve.model.Tables
 import kotlinx.android.synthetic.main.activity_table.*
 
@@ -54,7 +55,7 @@ class TableActivity : AppCompatActivity() {
 
         if (requestCode == REQUEST_DISH) {
             if (resultCode == Activity.RESULT_OK) {
-                val dishToAdd = data?.getSerializableExtra(EXTRA_DISH) as? Dish
+                val dishToAdd = data?.getSerializableExtra(EXTRA_DISH) as? DishOrdered
                 if (dishToAdd != null) {
                     Tables[tableIndex].addDish(dishToAdd)
                     val fragment = fragmentManager.findFragmentById(R.id.table_fragment) as? TableFragment
