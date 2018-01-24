@@ -4,12 +4,13 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import com.hbravodev.rest2serve.R
 import com.hbravodev.rest2serve.model.Dish
 import kotlinx.android.synthetic.main.fragment_dish_detail.*
@@ -48,6 +49,7 @@ class DishDetailFragment : Fragment() {
         val dishDescription = root?.findViewById<TextView>(R.id.dish_description)
         val addDishBtn = root?.findViewById<Button>(R.id.add_dish_btn)
         val cancelBtn = root?.findViewById<Button>(R.id.cancel_btn)
+        val dishNotes = root?.findViewById<EditText>(R.id.dish_notes)
 
         val dishToShow = arguments.getSerializable(ARG_DISH) as? Dish
 
@@ -78,6 +80,16 @@ class DishDetailFragment : Fragment() {
 
         cancelBtn?.setOnClickListener {
             onAddDishListener?.dismiss()
+        }
+
+        dishNotes?.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val imm = v.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+                true
+            } else {
+                false
+            }
         }
 
         return root

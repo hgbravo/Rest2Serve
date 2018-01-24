@@ -5,4 +5,5 @@
     <dimen name="small_dps">8dp</dimen>
     <dimen name="maxWidthRV">90dp</dimen>
     <dimen name="minWidth">48dp</dimen>
+    <dimen name="editText_height">150dp</dimen>
 </resources>
