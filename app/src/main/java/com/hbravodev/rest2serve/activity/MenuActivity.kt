@@ -53,7 +53,12 @@ class MenuActivity : AppCompatActivity(), MenuFragment.OnDishSelectedListener, D
     }
 
     override fun dismiss() {
-        super.onBackPressed()
+//        super.onBackPressed()
         fragmentManager.popBackStack("stack0", 0)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

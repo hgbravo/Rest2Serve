@@ -6,4 +6,5 @@
     <dimen name="maxWidthRV">90dp</dimen>
     <dimen name="minWidth">48dp</dimen>
     <dimen name="editText_height">150dp</dimen>
+    <dimen name="bold_text_size">16sp</dimen>
 </resources>

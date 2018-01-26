@@ -2,14 +2,14 @@ package com.hbravodev.rest2serve.model
 
 import android.util.Log
 
-class Table {
+class Table(val number: Int) {
 
-    private val number: Int = 0
+
     var items: MutableList<DishOrdered>? = arrayListOf()
 
-    constructor(number: Int, items: MutableList<DishOrdered>?)
+//    constructor(number: Int, items: MutableList<DishOrdered>?)
 
-    fun dishes(): Array<Dish>? = items?.toTypedArray()
+    fun dishes(): Array<DishOrdered>? = items?.toTypedArray()
 
     fun addDish(dish: DishOrdered) {
         Log.v("TAG", "${items?.add(dish)}")

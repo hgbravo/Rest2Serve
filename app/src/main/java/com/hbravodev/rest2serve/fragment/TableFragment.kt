@@ -42,6 +42,7 @@ class TableFragment : Fragment() {
 
         // Inflate the layout for this fragment
         if (inflater != null) {
+            tableIndex = arguments.getInt(ARG_TABLE_INDEX)
             root = inflater.inflate(R.layout.fragment_table, container, false)
             list = root.findViewById(R.id.dishes_list)
             adapter = ArrayAdapter(activity, android.R.layout.simple_list_item_1, Tables[tableIndex].dishes())
