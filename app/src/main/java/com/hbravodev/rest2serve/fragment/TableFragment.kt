@@ -1,11 +1,10 @@
 package com.hbravodev.rest2serve.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
 import android.widget.ListView
@@ -57,6 +56,26 @@ class TableFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.manage_table, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId  == R.id.menu_calculate_check) {
+            AlertDialog.Builder(activity)
+                    .setTitle("Check")
+                    .setMessage("The total to pay for this table is: $" + Tables[tableIndex].check().toString())
+                    .setPositiveButton("Done", { dialog, _ ->
+                        dialog.dismiss()
+                    })
+                    .show()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
